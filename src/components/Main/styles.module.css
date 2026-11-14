@@ -1,0 +1,11 @@
+.main {
+    width: 100%;
+    max-width: 1216px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 130px;
+}
+
+
