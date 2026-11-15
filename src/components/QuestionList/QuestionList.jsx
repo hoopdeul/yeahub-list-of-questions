@@ -8,7 +8,7 @@ const QuestionList = () => {
 
     const [questions, setQuestions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 10;
+    const [totalPages, setTotalPages] = useState(0);
     const pageSize = 10;
 
     useEffect(() => {
@@ -16,6 +16,7 @@ const QuestionList = () => {
             try {
                 const data = await getQuestions(currentPage, pageSize);
                 setQuestions(data.data);
+                setTotalPages(Math.ceil(data.total / pageSize))
             } catch (error) {
                 console.log(error)
             }
@@ -25,13 +26,13 @@ const QuestionList = () => {
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1)
+            setCurrentPage(prev => prev + 1)
         }
     }
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
-            setCurrentPage(currentPage - 1)
+            setCurrentPage(prev => prev - 1)
         }
     }
     
@@ -43,11 +44,15 @@ const QuestionList = () => {
                 <li className={styles.title}>
                     <h1>Вопросы React, JavaScript</h1>
                 </li>
+
                 {questions.map(question => (
-                    <QuestionItem key={question.id} question={question} />
+                    <QuestionItem 
+                    key={question.id} 
+                    question={question} />
                 ))}
                 <li>
-                    <Pagination totalPages={totalPages}
+                    <Pagination 
+                    totalPages={totalPages}
                     handleNextPage={handleNextPage}
                     handlePageClick={handlePageClick}
                     handlePrevPage={handlePrevPage}
