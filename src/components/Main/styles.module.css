@@ -8,4 +8,9 @@
     margin-bottom: 130px;
 }
 
+@media (min-width: 1440px) {
+    .main {
+        margin-top: 40px;
+    }
+}
 
