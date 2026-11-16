@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import { getQuestions } from '../../api/apiQuestions';
 import QuestionItem from '../QuestionItem/QuestionItem';
 import Pagination from '../Pagination/Pagination';
+import Skeleton from '../Skeleton/Skeleton';
 
 const QuestionList = () => {
 
@@ -10,6 +11,7 @@ const QuestionList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const pageSize = 10;
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -19,6 +21,8 @@ const QuestionList = () => {
                 setTotalPages(Math.ceil(data.total / pageSize))
             } catch (error) {
                 console.log(error)
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchQuestions();
@@ -42,23 +46,34 @@ const QuestionList = () => {
     return (
             <section className={styles.questionContainer}>
 
-                <h1 className={styles.title}>Вопросы React, JavaScript</h1>
+                <h1 className={styles.title}>{isLoading ? (<Skeleton type='title' />) : 'Вопросы React, JavaScript'}</h1>
 
                 <ul className={styles.questionList}>
-                    {questions.map(question => (
+                    {isLoading ? (
+                        Array.from({ length: pageSize }).map((_, index) => (
+                            <li key={index}>
+                                <Skeleton type="question" />
+                            </li>
+                        ))
+                    ) : (
+                        questions.map(question => (
                     <QuestionItem 
                     key={question.id} 
                     question={question} />
-                ))}
+                ))
+                    )}
+                    
                 </ul>
-                
+                {isLoading ? (
+                    <Skeleton type='pagination' />
+                ) :
                 <Pagination 
                 totalPages={totalPages}
                 handleNextPage={handleNextPage}
                 handlePageClick={handlePageClick}
                 handlePrevPage={handlePrevPage}
                 currentPage={currentPage}
-                />
+                /> }
             </section>
     )
 }
