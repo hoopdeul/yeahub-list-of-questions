@@ -40,26 +40,26 @@ const QuestionList = () => {
             setCurrentPage(pageNumber)
         }
     return (
-            <ul className={styles.questionList}>
-                <li className={styles.title}>
-                    <h1>Вопросы React, JavaScript</h1>
-                </li>
+            <section className={styles.questionContainer}>
 
-                {questions.map(question => (
+                <h1 className={styles.title}>Вопросы React, JavaScript</h1>
+
+                <ul className={styles.questionList}>
+                    {questions.map(question => (
                     <QuestionItem 
                     key={question.id} 
                     question={question} />
                 ))}
-                <li>
-                    <Pagination 
-                    totalPages={totalPages}
-                    handleNextPage={handleNextPage}
-                    handlePageClick={handlePageClick}
-                    handlePrevPage={handlePrevPage}
-                    currentPage={currentPage}
-                    />
-                </li>
-            </ul>
+                </ul>
+                
+                <Pagination 
+                totalPages={totalPages}
+                handleNextPage={handleNextPage}
+                handlePageClick={handlePageClick}
+                handlePrevPage={handlePrevPage}
+                currentPage={currentPage}
+                />
+            </section>
     )
 }
 
