@@ -5,7 +5,7 @@ import QuestionItem from '../QuestionItem/QuestionItem';
 import Pagination from '../Pagination/Pagination';
 import Skeleton from '../Skeleton/Skeleton';
 
-const QuestionList = () => {
+const QuestionList = ({selectedSpec, selectedSkills, selectedComplexity, selectedRate}) => {
 
     const [questions, setQuestions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -15,10 +15,31 @@ const QuestionList = () => {
 
     useEffect(() => {
         const fetchQuestions = async () => {
+            setIsLoading(true);
             try {
-                const data = await getQuestions(currentPage, pageSize);
+                const data = await getQuestions(currentPage,
+                    pageSize,
+                    {
+                        ...(selectedSpec && {
+                            specializationId: selectedSpec
+                        }),
+
+                        ...(selectedSkills.length > 0 && {
+                            skills: selectedSkills,
+                            skillFilterMode: 'ANY'
+                        }),
+
+                        ...(selectedComplexity.length > 0 && {
+                            complexity: selectedComplexity
+                        }),
+
+                        ...(selectedRate.length > 0 && {
+                            rate: selectedRate
+                        })
+                    }
+                );
                 setQuestions(data.data);
-                setTotalPages(Math.ceil(data.total / pageSize))
+                setTotalPages(Math.ceil(data.total / pageSize));
             } catch (error) {
                 console.log(error)
             } finally {
@@ -26,7 +47,8 @@ const QuestionList = () => {
             }
         };
         fetchQuestions();
-    }, [currentPage]);
+    }, [currentPage, selectedSpec, selectedSkills, selectedComplexity, selectedRate]);
+
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
