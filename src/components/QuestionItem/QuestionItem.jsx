@@ -24,7 +24,7 @@ const QuestionItem = ({question}) => {
                 </div>
                 
                 <Spoiler isOpen={isOpen}
-                shortAnswer={question.shortAnswer}
+                question={question}
                 />
         
             </li>
