@@ -8,12 +8,15 @@ const Main = () => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedComplexity, setSelectedComplexity] = useState([]);
     const [selectedRate, setSelectedRate] = useState([]);
+    const [keywords, setKeywords] = useState('');
+
     return (
         <div className={styles.main}>
             <QuestionList selectedSpec={selectedSpec} 
             selectedSkills={selectedSkills}
             selectedComplexity={selectedComplexity}
             selectedRate={selectedRate}
+            keywords={keywords}
             />
             <Sidebar selectedSpec={selectedSpec}
             setSelectedSpec={setSelectedSpec}
@@ -23,6 +26,8 @@ const Main = () => {
             setSelectedComplexity={setSelectedComplexity}
             selectedRate={selectedRate}
             setSelectedRate={setSelectedRate}
+            keywords={keywords}
+            setKeywords={setKeywords}
             />
         </div>
     )

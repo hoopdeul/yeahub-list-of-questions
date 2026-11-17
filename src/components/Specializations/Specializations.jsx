@@ -25,7 +25,7 @@ const Specializations = ({selectedSpec, setSelectedSpec}) => {
                 .map(spec => (<button 
                 key={spec.id}
                 type='button'
-                onClick={() => setSelectedSpec(spec.id)}
+                onClick={() => setSelectedSpec(selectedSpec === spec.id ? null : spec.id)}
                 className={`${styles.specializations} ${selectedSpec === spec.id ? styles.active : ''}`}
                 >
                     {spec.title}</button>))}

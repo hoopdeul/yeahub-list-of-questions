@@ -7,7 +7,7 @@ export const getSpecializations = async () => {
     const responce = await axios.get(`${BASE_URL}specializations`, {
       params: {
         page: 1,
-        limit: 1000
+        limit: 100
       }
     });
     return responce.data;
