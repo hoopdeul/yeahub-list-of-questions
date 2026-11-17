@@ -1,3 +1,4 @@
+import Search from '../Search/Search';
 import Skills from '../Skills/Skills';
 import Specializations from '../Specializations/Specializations';
 import styles from './styles.module.css';
@@ -5,7 +6,10 @@ import styles from './styles.module.css';
 const Sidebar = ({selectedSpec, setSelectedSpec, selectedSkills, setSelectedSkills, selectedComplexity,
     setSelectedComplexity,
     selectedRate,
-    setSelectedRate}) => {
+    setSelectedRate,
+    keywords,
+    setKeywords
+}) => {
 
     const toggleValue = (value, selected, setSelected) => {
         setSelected(prev =>
@@ -23,6 +27,7 @@ const Sidebar = ({selectedSpec, setSelectedSpec, selectedSkills, setSelectedSkil
     ];
     return (
         <div className={styles.sidebar}>
+            <Search keywords={keywords} setKeywords={setKeywords} />
             <Specializations selectedSpec={selectedSpec} setSelectedSpec={setSelectedSpec} />
             <Skills selectedSkills={selectedSkills} setSelectedSkills={setSelectedSkills} />
             <div>

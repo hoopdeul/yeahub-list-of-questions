@@ -7,7 +7,7 @@ export const getSkills = async () => {
     const responce = await axios.get(`${BASE_URL}skills`, {
       params: {
         page: 1,
-        limit: 1000
+        limit: 100
       }
     });
     return responce.data;

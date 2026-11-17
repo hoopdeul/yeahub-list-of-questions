@@ -4,14 +4,17 @@ import { getQuestions } from '../../api/apiQuestions';
 import QuestionItem from '../QuestionItem/QuestionItem';
 import Pagination from '../Pagination/Pagination';
 import Skeleton from '../Skeleton/Skeleton';
+import {useDebounce} from '../../helpers/useDebounce';
 
-const QuestionList = ({selectedSpec, selectedSkills, selectedComplexity, selectedRate}) => {
+
+const QuestionList = ({selectedSpec, selectedSkills, selectedComplexity, selectedRate, keywords}) => {
 
     const [questions, setQuestions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const pageSize = 10;
     const [isLoading, setIsLoading] = useState(true);
+    const debounceSearch = useDebounce(keywords, 1000);
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -35,6 +38,9 @@ const QuestionList = ({selectedSpec, selectedSkills, selectedComplexity, selecte
 
                         ...(selectedRate.length > 0 && {
                             rate: selectedRate
+                        }),
+                        ...(debounceSearch.trim().length > 0 && {
+                            titleOrDescription: debounceSearch.trim()
                         })
                     }
                 );
@@ -47,7 +53,7 @@ const QuestionList = ({selectedSpec, selectedSkills, selectedComplexity, selecte
             }
         };
         fetchQuestions();
-    }, [currentPage, selectedSpec, selectedSkills, selectedComplexity, selectedRate]);
+    }, [currentPage, selectedSpec, selectedSkills, selectedComplexity, selectedRate, debounceSearch]);
 
 
     const handleNextPage = () => {
