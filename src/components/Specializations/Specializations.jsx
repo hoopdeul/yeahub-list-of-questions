@@ -1,4 +1,4 @@
-import { getSpecializations } from '../../api/apiSpecializations';
+import { getList } from '../../api/apiFilters';
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
 
@@ -9,7 +9,7 @@ const Specializations = ({selectedSpec, setSelectedSpec}) => {
     useEffect(() => {
             const fetchSpecializations = async () => {
                 try {
-                    const data = await getSpecializations();
+                    const data = await getList("specializations");
                     setSpecializations(data.data);
                 } catch (error) {
                     console.log(error)

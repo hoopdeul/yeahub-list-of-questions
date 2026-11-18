@@ -2,6 +2,8 @@ import Search from '../Search/Search';
 import Skills from '../Skills/Skills';
 import Specializations from '../Specializations/Specializations';
 import styles from './styles.module.css';
+import { COMPLEXITY_RANGES, RATE_VALUES } from '../../constants/filters';
+
  
 const Sidebar = ({selectedSpec, setSelectedSpec, selectedSkills, setSelectedSkills, selectedComplexity,
     setSelectedComplexity,
@@ -19,12 +21,6 @@ const Sidebar = ({selectedSpec, setSelectedSpec, selectedSkills, setSelectedSkil
         );
     };
 
-    const complexityRanges = [
-        { label: '1-3', values: [1, 2, 3] },
-        { label: '4-6', values: [4, 5, 6] },
-        { label: '7-8', values: [7, 8] },
-        { label: '9-10', values: [9, 10] }
-    ];
     return (
         <div className={styles.sidebar}>
             <Search keywords={keywords} setKeywords={setKeywords} />
@@ -36,7 +32,7 @@ const Sidebar = ({selectedSpec, setSelectedSpec, selectedSkills, setSelectedSkil
                 </p>
                 
                 <div className={styles.complexity}>
-                    {complexityRanges.map(range => {
+                    {COMPLEXITY_RANGES.map(range => {
                         const isActive = range.values.every(value =>
                             selectedComplexity.includes(value)
                         );
@@ -71,7 +67,7 @@ const Sidebar = ({selectedSpec, setSelectedSpec, selectedSkills, setSelectedSkil
                     Рейтинг
                 </p>
                 <div className={styles.complexity}>
-                    {[1, 2, 3, 4, 5].map(value => (
+                    {RATE_VALUES.map(value => (
                         <button
                             key={value}
                             type="button"

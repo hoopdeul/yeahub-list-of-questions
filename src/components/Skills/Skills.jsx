@@ -1,6 +1,6 @@
-import { getSkills } from '../../api/apiSkills';
 import styles from './styles.module.css';
 import { useEffect, useState } from 'react';
+import { getList } from '../../api/apiFilters';
 
 const Skills = ({selectedSkills, setSelectedSkills}) => {
     const [skills, setSkills] = useState([]);
@@ -9,7 +9,7 @@ const Skills = ({selectedSkills, setSelectedSkills}) => {
     useEffect(() => {
             const fetchSkills = async () => {
                 try {
-                    const data = await getSkills();
+                    const data = await getList("skills");
                     setSkills(data.data);
                 } catch (error) {
                     console.log(error)
