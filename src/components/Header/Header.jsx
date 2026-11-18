@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <header className={styles.header}>
             <div className={styles.container}>
-                <img src={logo} alt='logo'/>
+                <img src={logo} alt='Логотип'/>
 
                 <nav className={styles.nav}>
                     <a href='#'>База вопросов</a>
@@ -14,11 +14,11 @@ const Header = () => {
                 </nav>
 
                 <div className={styles.actions}>
-                    <button className={styles.loginBtn}>
+                    <button type='button' className={styles.loginBtn}>
                         Вход
                     </button>
 
-                    <button className={styles.registerBtn}>
+                    <button type='button' className={styles.registerBtn}>
                         Регистрация
                     </button>
                 </div>
