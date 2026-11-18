@@ -1,0 +1,31 @@
+.footer {
+    margin-top: auto;
+    padding-block: 30px 12px;
+    background-color: #18003e;
+    border-radius: 16px 16px 0 0;
+    color: #8c8c8c;
+}
+
+.container {
+    margin: 15px;
+}
+.logo {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.text {
+    color: #fff;
+    margin-bottom: 16px;
+
+}
+
+.description {
+    font-size: 0.75rem;
+    border-bottom: 1px solid rgba(230, 230, 230, 0.1);
+    padding-bottom: 35px;
+    margin-bottom: 19px;
+}
+
