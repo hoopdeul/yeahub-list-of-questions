@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_BASE_API_URL;
 
 export const getQuestions = async (page = 1, limit = 10, filters = {}) => {
   try {
-    const responce = await axios.get(`${BASE_URL}questions/public-questions`, {
+    const response = await axios.get(`${BASE_URL}questions/public-questions`, {
       params: {
         page,
         limit,
@@ -14,7 +14,7 @@ export const getQuestions = async (page = 1, limit = 10, filters = {}) => {
         indexes: null
       }
     });
-    return responce.data;
+    return response.data;
   } catch (error) {
     console.log("Ошибка получения вопросов:", error);
     return { data: [], total: 0 };

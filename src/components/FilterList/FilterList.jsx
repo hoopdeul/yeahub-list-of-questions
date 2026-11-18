@@ -1,3 +1,4 @@
+import Skeleton from '../Skeleton/Skeleton';
 import styles from './styles.module.css';
 import { useState } from 'react';
 
@@ -21,7 +22,11 @@ const FilterList = ({
             <p className={styles.title}>{title}</p>
 
             {isLoading ? (
-                <p className={styles.title}>Загрузка</p>
+                <div className={styles.complexity}>
+                    {Array.from({ length: VISIBLE_LIMIT }).map((_, index) => (
+                        <Skeleton key={index} type="filter" />
+                    ))}
+                </div>
             ) : (
                 items.length === 0 ? (
                     <p className={styles.title}>{emptyText}</p>
