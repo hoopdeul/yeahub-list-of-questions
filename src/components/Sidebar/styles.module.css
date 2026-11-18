@@ -10,36 +10,3 @@
     flex-direction: column;
     gap: 24px;
 }
-
-.complexity {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.title {
-    font-size: 14px;
-    color: #474747;
-    margin-bottom: 8px;
-}
-
-.button {
-    padding: 6px 12px;
-    border: 1px solid #bababa;
-    border-radius: 12px;
-    background-color: #ffffff;
-    font-size: 16px;
-    color: #303030;
-    min-height: 42px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.button:hover {
-    background-color: #6a0bff;
-    color: #ffffff;
-}
-
-.active {
-    border-color: #6a0bff;
-}

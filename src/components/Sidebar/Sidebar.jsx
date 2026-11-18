@@ -1,9 +1,19 @@
 import Search from '../Search/Search';
-import Skills from '../Skills/Skills';
-import Specializations from '../Specializations/Specializations';
 import styles from './styles.module.css';
- 
-const Sidebar = ({selectedSpec, setSelectedSpec, selectedSkills, setSelectedSkills, selectedComplexity,
+import { COMPLEXITY_RANGES, RATE_VALUES } from '../../constants/filters';
+import { getList } from '../../api/apiFilters';
+import { useFetchList } from '../../helpers/useFetchList';
+import FilterList from '../FilterList/FilterList';
+import {toggleInArray, toggleRange, toggleSingle} from '../../helpers/toggleFilters'
+
+const fetchSpecializations = () => getList('specializations');
+const fetchSkills = () => getList('skills');
+
+const Sidebar = ({selectedSpec, 
+    setSelectedSpec, 
+    selectedSkills, 
+    setSelectedSkills,
+    selectedComplexity,
     setSelectedComplexity,
     selectedRate,
     setSelectedRate,
@@ -11,84 +21,57 @@ const Sidebar = ({selectedSpec, setSelectedSpec, selectedSkills, setSelectedSkil
     setKeywords
 }) => {
 
-    const toggleValue = (value, selected, setSelected) => {
-        setSelected(prev =>
-            prev.includes(value)
-                ? prev.filter(item => item !== value)
-                : [...prev, value]
-        );
-    };
 
-    const complexityRanges = [
-        { label: '1-3', values: [1, 2, 3] },
-        { label: '4-6', values: [4, 5, 6] },
-        { label: '7-8', values: [7, 8] },
-        { label: '9-10', values: [9, 10] }
-    ];
+    const {items: specializations, isLoading: specLoading} = useFetchList(fetchSpecializations);
+    const {items: skills, isLoading: skillsLoading} = useFetchList(fetchSkills);
+    
+
+    // const toggleValue = (value, selected, setSelected) => {
+    //     setSelected(prev =>
+    //         prev.includes(value)
+    //             ? prev.filter(item => item !== value)
+    //             : [...prev, value]
+    //     );
+    // };
+
     return (
         <div className={styles.sidebar}>
             <Search keywords={keywords} setKeywords={setKeywords} />
-            <Specializations selectedSpec={selectedSpec} setSelectedSpec={setSelectedSpec} />
-            <Skills selectedSkills={selectedSkills} setSelectedSkills={setSelectedSkills} />
-            <div>
-                <p className={styles.title}>
-                    Сложность
-                </p>
-                
-                <div className={styles.complexity}>
-                    {complexityRanges.map(range => {
-                        const isActive = range.values.every(value =>
-                            selectedComplexity.includes(value)
-                        );
 
-                        return (
-                            <button
-                                key={range.label}
-                                type="button"
-                                onClick={() => {
-                                    setSelectedComplexity(prev => {
-                                        const allSelected = range.values.every(
-                                            value => prev.includes(value)
-                                        );
+            <FilterList
+                title='Специализация'
+                items={specializations}
+                isLoading={specLoading}
+                isSelected={(spec) => selectedSpec === spec.id}
+                onToggle={(id) => setSelectedSpec(prev => toggleSingle(prev, id))}
+            />
 
-                                        return allSelected
-                                            ? prev.filter(value => !range.values.includes(value))
-                                            : [...new Set([...prev, ...range.values])];
-                                    });
-                                }}
-                                className={`${styles.button} ${
-                                    isActive ? styles.active : ''
-                                }`}
-                            >
-                                {range.label}
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-            <div>
-                <p className={styles.title}>
-                    Рейтинг
-                </p>
-                <div className={styles.complexity}>
-                    {[1, 2, 3, 4, 5].map(value => (
-                        <button
-                            key={value}
-                            type="button"
-                            onClick={() => toggleValue(
-                                value,
-                                selectedRate,
-                                setSelectedRate
-                            )}
-                            className={`${styles.button} ${
-                                selectedRate.includes(value) ? styles.active : ''
-                            }`}
-                        >
-                            {value}
-                        </button>
-                    ))}
-                </div>
-            </div>
+            <FilterList
+                title='Навыки'
+                items={skills}
+                isLoading={skillsLoading}
+                isSelected={(skill) => selectedSkills.includes(skill.id)}
+                onToggle={(id) => setSelectedSkills(prev => toggleInArray(prev, id))}
+            />
+
+            <FilterList
+                title='Сложность'
+                items={COMPLEXITY_RANGES}
+                getLabel={range => range.label}
+                getValue={range => range.values}
+                isSelected={(range) => range.values.every(v => selectedComplexity.includes(v))}
+                onToggle={(values) => setSelectedComplexity(prev => toggleRange(prev, values))}
+            />
+
+            <FilterList
+                title='Рейтинг'
+                items={RATE_VALUES}
+                // getLabel={String}
+                // getValue={v => v}
+                isSelected={(v) => selectedRate.includes(v)}
+                onToggle={(v) => setSelectedRate(prev => toggleInArray(prev, v))}
+            />
+
         </div>
     )
 }

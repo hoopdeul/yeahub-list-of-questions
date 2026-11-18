@@ -3,9 +3,7 @@ import styles from './styles.module.css';
 const Spoiler = ({isOpen, question}) => {
     
     return (
-
-        <div
-            className={`${styles.answerContent} ${isOpen ? styles.answerOpen : ''}`}>
+        <div className={`${styles.answerContent} ${isOpen ? styles.answerOpen : ''}`}>
                 <div className={styles.details}>
                     <p>
                         <span>Рейтинг:</span>
