@@ -1,7 +1,8 @@
 .title,
 .questionButton,
 .questionText,
-.pagination {
+.pagination,
+.filter {
     background: linear-gradient(90deg,
             #eeeeee 25%,
             #e2e2e2 50%,
@@ -58,4 +59,13 @@
     width: 250px;
     height: 28px;
     margin: 0 auto;
+}
+
+.filter {
+    width: 100px;
+    height: 40px;
+    background-color: #e2e2e2;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-bottom: 15px;
 }

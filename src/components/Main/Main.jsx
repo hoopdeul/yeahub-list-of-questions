@@ -3,32 +3,30 @@ import Sidebar from '../Sidebar/Sidebar';
 import styles from './styles.module.css';
 import { useState } from 'react';
 
+const initialFilters = {
+    spec: null,
+    skills: [],
+    complexity: [],
+    rate: [],
+    keywords: ''
+}
+
 const Main = () => {
-    const [selectedSpec, setSelectedSpec] = useState(null);
-    const [selectedSkills, setSelectedSkills] = useState([]);
-    const [selectedComplexity, setSelectedComplexity] = useState([]);
-    const [selectedRate, setSelectedRate] = useState([]);
-    const [keywords, setKeywords] = useState('');
+    const [filters, setFilters] = useState(initialFilters);
+
+    const updateFilter = (key, updater) => {
+  setFilters((prev) => ({
+    ...prev,
+    [key]: typeof updater === 'function' ? updater(prev[key]) : updater,
+  }));
+};
 
     return (
         <div className={styles.main}>
-            <QuestionList selectedSpec={selectedSpec} 
-            selectedSkills={selectedSkills}
-            selectedComplexity={selectedComplexity}
-            selectedRate={selectedRate}
-            keywords={keywords}
-            />
-            <Sidebar selectedSpec={selectedSpec}
-            setSelectedSpec={setSelectedSpec}
-            selectedSkills={selectedSkills}
-            setSelectedSkills={setSelectedSkills}
-            selectedComplexity={selectedComplexity}
-            setSelectedComplexity={setSelectedComplexity}
-            selectedRate={selectedRate}
-            setSelectedRate={setSelectedRate}
-            keywords={keywords}
-            setKeywords={setKeywords}
-            />
+            <QuestionList filters={filters}/>
+
+            <Sidebar filters={filters}
+            updateFilter={updateFilter}/>
         </div>
     )
 }
